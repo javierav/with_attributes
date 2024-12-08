@@ -1,0 +1,38 @@
+inherit_mode:
+  merge:
+    - Exclude
+
+require:
+  - rubocop-minitest
+  - rubocop-performance
+  - rubocop-rake
+
+AllCops:
+  Exclude:
+    - "**/bin/**/*"
+  DisplayCopNames: true
+  DisplayStyleGuide: true
+  NewCops: enable
+  SuggestExtensions: true
+
+Layout/LineLength:
+  Max: 120
+
+Metrics/BlockLength:
+  Enabled: false
+Metrics/ClassLength:
+  Enabled: false
+Metrics/MethodLength:
+  Enabled: false
+
+Minitest/MultipleAssertions:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+Style/DocumentDynamicEvalDefinition:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  EnforcedStyle: never
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
