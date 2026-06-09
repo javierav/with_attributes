@@ -198,4 +198,4 @@ end
 
 ## Licence
 
-Copyright © 2024 Javier Aranda. Released under the terms of the [MIT license](LICENSE).
+Copyright © 2024-2026 Javier Aranda. Released under the terms of the [MIT license](LICENSE).
