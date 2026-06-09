@@ -22,5 +22,5 @@ Gem::Specification.new do |spec|
   spec.files = Dir["lib/**/*", "LICENSE", "README.md"]
 
   # ruby minimal version
-  spec.required_ruby_version = "~> 3.0"
+  spec.required_ruby_version = ">= 3.2"
 end

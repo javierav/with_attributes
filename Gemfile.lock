@@ -1,24 +1,28 @@
 PATH
   remote: .
   specs:
-    with_attributes (0.1.0)
+    with_attributes (0.2.0)
 
 GEM
   remote: https://rubygems.org/
   specs:
     ast (2.4.2)
     date (3.4.1)
+    drb (2.2.3)
     io-console (0.8.0)
     irb (1.14.1)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     json (2.9.0)
     language_server-protocol (3.17.0.3)
-    minitest (5.25.4)
+    minitest (6.0.6)
+      drb (~> 2.0)
+      prism (~> 1.5)
     parallel (1.26.3)
     parser (3.3.6.0)
       ast (~> 2.4.1)
       racc
+    prism (1.9.0)
     psych (5.2.1)
       date
       stringio
@@ -54,7 +58,7 @@ GEM
     stringio (3.1.2)
     unicode-display_width (3.1.2)
       unicode-emoji (~> 4.0, >= 4.0.4)
-    unicode-emoji (4.0.4)
+    unicode-emoji (4.2.0)
 
 PLATFORMS
   arm64-darwin-24
