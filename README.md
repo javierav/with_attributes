@@ -130,7 +130,51 @@ User.find(...).tap do |user|
 end
 ```
 
+## Active Record transactions
 
+The `with_*` and `without_*` modifiers restore the previous value as soon as the block ends. Active Record runs `after_commit` and `after_rollback` callbacks when the outermost transaction finishes, so if that transaction wraps the modifier, these callbacks run after the block has ended and see the original value:
+
+```ruby
+class User < ApplicationRecord
+  extend WithAttributes
+
+  with_attribute :tracking, default: true
+
+  after_create { tracking? }             # runs inside the block
+  after_commit :track, if: :tracking?    # runs after the block
+end
+
+User.transaction do
+  User.without_tracking do
+    User.create(...) # after_create sees tracking? => false
+  end
+end # after_commit sees tracking? => true, so the user is tracked
+```
+
+This affects both class-level and instance-level modifiers. Callbacks such as `after_create`, `after_update` and `after_destroy` are not affected, because they run inside the block.
+
+There are several ways to avoid it:
+
+* Keep the whole transaction inside the block. A single `User.create(...)` outside of any transaction also works, because its implicit transaction commits inside the block. This doesn't help if there is another transaction around it, such as one opened by the caller, because the commit is still delayed until the outermost transaction finishes.
+
+  ```ruby
+  User.without_tracking do
+    User.transaction do
+      User.create(...)
+    end
+  end
+  ```
+
+* Save the value in a callback that runs inside the block and check it in `after_commit`. This works however many transactions are around it.
+
+  ```ruby
+  after_save { @tracked = tracking? }
+  after_commit :track, if: -> { @tracked }
+  ```
+
+* Use `user.disable_tracking` or `user.enable_tracking` on the instance, because they aren't restored when a block ends. The value stays on that instance until it is changed again.
+
+Avoid `User.disable_tracking` and `User.enable_tracking` for this: the value stays for the whole thread, so it would also apply to later code running in that thread, for example the next request handled by the same server thread.
 
 ## Thread safety
 
