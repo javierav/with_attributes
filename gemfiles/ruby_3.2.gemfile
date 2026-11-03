@@ -1,0 +1,5 @@
+eval_gemfile "../Gemfile"
+
+# Newer versions require Ruby >= 3.3
+gem "parallel", "< 2", require: false
+gem "rbs", "< 4.2", require: false
